@@ -41,8 +41,8 @@ pub enum TokenT {
     Tassign,        /* = */             /* Implimented */
     Tincrement,     /* ++ */            /* Implimented */
     Tdecrement,     /* -- */            /* Implimented */
-    Tcolon,         /* : */
-    Tsemicolon,     /* ; */
+    Tcolon,         /* : */             /* Implimented */
+    Tsemicolon,     /* ; */             /* Implimented */
     Teof,           /* end-of-file (EOF) */
     Tampersand,     /* & */             //
     Treturn,
