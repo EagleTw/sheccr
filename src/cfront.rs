@@ -11,18 +11,18 @@ use std::convert::TryInto;
 #[allow(dead_code)]
 pub enum TokenT {
     Tstart, /* FIXME: it was intended to start the state machine. */
-    Tnumeric(i64),                      /* Implimented */
+    Tnumeric(i64),                      /* Implimented */       /* Tested */ 
     Tidentifier,                        
-    Tcomma,  /* , */                    /* Implimented */
+    Tcomma,  /* , */                    /* Implimented */       /* Tested */
     Tstring(String), /* null-terminated string */
-    Tchar(char),                        /* Implimented */                        
-    TopenBracket,   /* ( */             /* Implimented */
-    TcloseBracket,  /* ) */             /* Implimented */
-    TopenCurly,     /* { */             /* Implimented */
-    TcloseCurly,    /* } */             /* Implimented */
-    TopenSquare,    /* [ */             /* Implimented */
-    TcloseSquare,   /* ] */             /* Implimented */
-    Tasterisk,      /* '*' */           /* Implimented */  
+    Tchar(char),                        /* Implimented */       /* Tested */                               
+    TopenBracket,   /* ( */             /* Implimented */       /* Tested */
+    TcloseBracket,  /* ) */             /* Implimented */       /* Tested */
+    TopenCurly,     /* { */             /* Implimented */       /* Tested */
+    TcloseCurly,    /* } */             /* Implimented */       /* Tested */
+    TopenSquare,    /* [ */             /* Implimented */       /* Tested */
+    TcloseSquare,   /* ] */             /* Implimented */       /* Tested */
+    Tasterisk,      /* '*' */           /* Implimented */       /* Tested */  
     TbitOr,         /* | */             /* Implimented */
     TlogAnd,        /* && */            /* Implimented */
     TlogOr,         /* || */            /* Implimented */
@@ -83,8 +83,8 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             'A'..='Z' | 'a'..='z'=> {
                 let st:String = get_till_space(c, &mut it);
-                match st {
-                    "return" => {result.push(TokenT::Treturn)}
+                match st.as_ref() {
+                    "return"=> {result.push(TokenT::Treturn)}
                     // Tif,
                     // Telse,
                     // Twhile,
@@ -104,13 +104,19 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                     _ => {}
                 }
             }
-            // char 
+            // char ???
             '\'' => {
                 it.next();
-                let ch:char = c;
+                let ch = c;
+                println!("{}",c);
                 it.next();
+                println!("{}",c);
+                it.next();
+                println!("{}",c);
                 match c {
-                    '\'' => {result.push(TokenT::Tchar(ch));}
+                    '\'' => {
+                        result.push(TokenT::Tchar(ch));
+                    }
                     _ => {return Err(format!("Is not char"));}
                 }
             }
