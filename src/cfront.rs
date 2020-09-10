@@ -72,10 +72,10 @@ pub enum TokenT {
 pub fn get_till_space<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> String {
     let mut output: String = c.to_string();
     iter.next();
-    while let Some(st)= iter.peek(){
-        match *st{
+    while let Some(&st)= iter.peek(){
+        match st{
             'A'..='Z' | 'a'..='z' | '0'..='9' => {
-                output.push(*st);
+                output.push(st);
                 iter.next();
             }
             _ => {break;}
