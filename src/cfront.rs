@@ -69,6 +69,39 @@ pub enum TokenT {
     Tdefault,                           /* Implimented */       /* Tested */
 }
 
+pub fn get_till_space<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> String {
+    let mut output: String = c.to_string();
+    iter.next();
+    while let Some(st)= iter.peek(){
+        match *st{
+            'A'..='Z' | 'a'..='z' | '0'..='9' => {
+                output.push(*st);
+                iter.next();
+            }
+            _ => {break;}
+        }
+    }
+    output
+}
+
+pub fn get_number<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64 {
+    let mut number = c.to_string().parse::<u64>().expect("The caller should have passed a digit.");
+    while let Some(Ok(digit)) = iter.peek().map(|c| c.to_string().parse::<u64>()) {
+        number = number * 10 + digit;
+        iter.next();
+    }
+    number
+}
+
+pub fn print_tokens(token_vec : &Vec<TokenT>) {
+    println!("=====Resulting tokens=====");
+    for token in &*token_vec {
+    println!("Token: {:?}", token);
+    }
+    println!("=====End of tokens=====");
+    println!();
+}
+
 pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
     let mut result = Vec::new();
 
@@ -290,37 +323,4 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
     }
     result.push(TokenT::Teof);
     Ok(result)
-}
-
-pub fn get_till_space<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> String {
-    let mut output: String = c.to_string();
-    iter.next();
-    loop {
-        match iter.peek().unwrap(){
-            'A'..='Z' | 'a'..='z' | '0'..='9' => {
-                output.push(*iter.peek().unwrap());
-                iter.next();
-            }
-            _ => {break;}
-        }
-    }
-    output
-}
-
-pub fn get_number<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64 {
-    let mut number = c.to_string().parse::<u64>().expect("The caller should have passed a digit.");
-    while let Some(Ok(digit)) = iter.peek().map(|c| c.to_string().parse::<u64>()) {
-        number = number * 10 + digit;
-        iter.next();
-    }
-    number
-}
-
-pub fn print_tokens(token_vec : &Vec<TokenT>) {
-    println!("=====Resulting tokens=====");
-    for token in &*token_vec {
-    println!("Token: {:?}", token);
-    }
-    println!("=====End of tokens=====");
-    println!();
 }
