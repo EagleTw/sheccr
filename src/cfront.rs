@@ -1,16 +1,21 @@
+#![allow(unused_parens)]
+#![allow(unused_variables)]
+#![allow(while_true)]
 // C language front-end 
 
 use std::iter::Peekable;
 use std::convert::TryInto;
 
 // lexar tokens
+#[derive(Debug,Clone)]
+#[allow(dead_code)]
 pub enum TokenT {
     Tstart, /* FIXME: it was intended to start the state machine. */
     Tnumeric(i64),                      /* Implimented */
-    Tidentifier,
+    Tidentifier,                        
     Tcomma,  /* , */                    /* Implimented */
     Tstring(String), /* null-terminated string */
-    Tchar(char),
+    Tchar(char),                        /* Implimented */                        
     TopenBracket,   /* ( */             /* Implimented */
     TcloseBracket,  /* ) */             /* Implimented */
     TopenCurly,     /* { */             /* Implimented */
@@ -43,8 +48,8 @@ pub enum TokenT {
     Tdecrement,     /* -- */            /* Implimented */
     Tcolon,         /* : */             /* Implimented */
     Tsemicolon,     /* ; */             /* Implimented */
-    Teof,           /* end-of-file (EOF) */
-    Tampersand,     /* & */             //
+    Teof,           /* end-of-file (EOF) */             /* Implimented */
+    Tampersand,     /* & */             //              /* Implimented */
     Treturn,
     Tif,
     Telse,
@@ -64,7 +69,7 @@ pub enum TokenT {
     Tdefault,
 }
 
-fn lex(input: &String) -> Result<Vec<TokenT>, String>{
+pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
     let mut result = Vec::new();
 
     let mut it = input.chars().peekable();
@@ -74,8 +79,40 @@ fn lex(input: &String) -> Result<Vec<TokenT>, String>{
             '0'..='9' => {
                 it.next();
                 let n = get_number(c,&mut it);
-                //result.push(TokenT::Tnumeric(n));
                 result.push(TokenT::Tnumeric(n.try_into().unwrap()));
+            }
+            'A'..='Z' | 'a'..='z'=> {
+                let st:String = get_till_space(c, &mut it);
+                match st {
+                    "return" => {result.push(TokenT::Treturn)}
+                    // Tif,
+                    // Telse,
+                    // Twhile,
+                    // Tfor,
+                    // Tdo,
+                    // Tdefine,
+                    // Tinclude,
+                    // Ttypedef,
+                    // Tenum,
+                    // Tstruct,
+                    // Tsizeof,
+                    // Telipsis,       /* ... */
+                    // Tswitch,
+                    // Tcase,
+                    // Tbreak,
+                    // Tdefault,
+                    _ => {}
+                }
+            }
+            // char 
+            '\'' => {
+                it.next();
+                let ch:char = c;
+                it.next();
+                match c {
+                    '\'' => {result.push(TokenT::Tchar(ch));}
+                    _ => {return Err(format!("Is not char"));}
+                }
             }
             ',' => {
                 result.push(TokenT::Tcomma);
@@ -235,10 +272,26 @@ fn lex(input: &String) -> Result<Vec<TokenT>, String>{
             _ => {return Err(format!("unexpected character {}", c));}
         }
     }
+    result.push(TokenT::Teof);
     Ok(result)
 }
 
-fn get_number<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64 {
+pub fn get_till_space<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> String {
+    let mut output: String = c.to_string();
+    iter.next();
+    loop {
+        match c {
+            'A'..='Z' | 'a'..='z' | '0'..='9' => {
+                output.push(c);
+                iter.next();
+            }
+            _ => {break;}
+        }
+    }
+    output
+}
+
+pub fn get_number<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64 {
     let mut number = c.to_string().parse::<u64>().expect("The caller should have passed a digit.");
     while let Some(Ok(digit)) = iter.peek().map(|c| c.to_string().parse::<u64>()) {
         number = number * 10 + digit;
@@ -247,4 +300,11 @@ fn get_number<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64 
     number
 }
 
-fn main(){}
+pub fn print_tokens(token_vec : &Vec<TokenT>) {
+    println!("=====Resulting tokens=====");
+    for token in &*token_vec {
+    println!("Token: {:?}", token);
+    }
+    println!("=====End of tokens=====");
+    println!();
+}
