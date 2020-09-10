@@ -23,50 +23,50 @@ pub enum TokenT {
     TopenSquare,    /* [ */             /* Implimented */       /* Tested */
     TcloseSquare,   /* ] */             /* Implimented */       /* Tested */
     Tasterisk,      /* '*' */           /* Implimented */       /* Tested */  
-    TbitOr,         /* | */             /* Implimented */
-    TlogAnd,        /* && */            /* Implimented */
-    TlogOr,         /* || */            /* Implimented */
-    TlogNot,        /* ! */             /* Implimented */
-    Tlt,            /* < */             /* Implimented */
-    Tgt,            /* > */             /* Implimented */
-    Tle,            /* <= */            /* Implimented */
-    Tge,            /* >= */            /* Implimented */
-    Tlshift,        /* << */            /* Implimented */
-    Trshift,        /* >> */            /* Implimented */
-    Tdot,           /* . */             /* Implimented */
-    Tarrow,         /* -> */            /* Implimented */
-    Tplus,          /* + */             /* Implimented */
-    Tminus,         /* - */             /* Implimented */
-    Tminuseq,       /* -= */            /* Implimented */
-    Tpluseq,        /* += */            /* Implimented */
-    Toreq,          /* |= */            /* Implimented */
-    Tandeq,         /* &= */            /* Implimented */
-    Teq,            /* == */            /* Implimented */
-    Tnoteq,         /* != */            /* Implimented */
-    Tassign,        /* = */             /* Implimented */
-    Tincrement,     /* ++ */            /* Implimented */
-    Tdecrement,     /* -- */            /* Implimented */
-    Tcolon,         /* : */             /* Implimented */
-    Tsemicolon,     /* ; */             /* Implimented */
-    Teof,           /* end-of-file (EOF) */             /* Implimented */
-    Tampersand,     /* & */             //              /* Implimented */
-    Treturn,
-    Tif,
-    Telse,
-    Twhile,
-    Tfor,
-    Tdo,
-    Tdefine,
-    Tinclude,
-    Ttypedef,
-    Tenum,
-    Tstruct,
-    Tsizeof,
-    Telipsis,       /* ... */
-    Tswitch,
-    Tcase,
-    Tbreak,
-    Tdefault,
+    TbitOr,         /* | */             /* Implimented */       /* Tested */
+    TlogAnd,        /* && */            /* Implimented */       /* Tested */
+    TlogOr,         /* || */            /* Implimented */       /* Tested */
+    TlogNot,        /* ! */             /* Implimented */       /* Tested */
+    Tlt,            /* < */             /* Implimented */       /* Tested */       
+    Tgt,            /* > */             /* Implimented */       /* Tested */
+    Tle,            /* <= */            /* Implimented */       /* Tested */
+    Tge,            /* >= */            /* Implimented */       /* Tested */
+    Tlshift,        /* << */            /* Implimented */       /* Tested */
+    Trshift,        /* >> */            /* Implimented */       /* Tested */
+    Tdot,           /* . */             /* Implimented */       /* Tested */
+    Tarrow,         /* -> */            /* Implimented */       /* Tested */
+    Tplus,          /* + */             /* Implimented */       /* Tested */
+    Tminus,         /* - */             /* Implimented */       /* Tested */
+    Tminuseq,       /* -= */            /* Implimented */       /* Tested */
+    Tpluseq,        /* += */            /* Implimented */       /* Tested */
+    Toreq,          /* |= */            /* Implimented */       /* Tested */
+    Tandeq,         /* &= */            /* Implimented */       /* Tested */
+    Teq,            /* == */            /* Implimented */       /* Tested */
+    Tnoteq,         /* != */            /* Implimented */       /* Tested */
+    Tassign,        /* = */             /* Implimented */       /* Tested */
+    Tincrement,     /* ++ */            /* Implimented */       /* Tested */
+    Tdecrement,     /* -- */            /* Implimented */       /* Tested */
+    Tcolon,         /* : */             /* Implimented */       /* Tested */
+    Tsemicolon,     /* ; */             /* Implimented */       /* Tested */
+    Teof,           /* end-of-file*/    /* Implimented */       /* Tested */
+    Tampersand,     /* & */             /* Implimented */       /* Tested */
+    Treturn,                            /* Implimented */       /* Tested */
+    Tif,                                /* Implimented */       /* Tested */
+    Telse,                              /* Implimented */       /* Tested */
+    Twhile,                             /* Implimented */       /* Tested */
+    Tfor,                               /* Implimented */       /* Tested */
+    Tdo,                                /* Implimented */       /* Tested */
+    Tdefine,                            /* Implimented */       /* Tested */
+    Tinclude,                           /* Implimented */       /* Tested */
+    Ttypedef,                           /* Implimented */       /* Tested */
+    Tenum,                              /* Implimented */       /* Tested */
+    Tstruct,                            /* Implimented */       /* Tested */
+    Tsizeof,                            /* Implimented */       /* Tested */
+    Telipsis,      /* ... */            /* Implimented */       /* Tested */            
+    Tswitch,                            /* Implimented */       /* Tested */
+    Tcase,                              /* Implimented */       /* Tested */ 
+    Tbreak,                             /* Implimented */       /* Tested */
+    Tdefault,                           /* Implimented */       /* Tested */
 }
 
 pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
@@ -83,41 +83,39 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             'A'..='Z' | 'a'..='z'=> {
                 let st:String = get_till_space(c, &mut it);
-                match st.as_ref() {
-                    "return"=> {result.push(TokenT::Treturn)}
-                    // Tif,
-                    // Telse,
-                    // Twhile,
-                    // Tfor,
-                    // Tdo,
-                    // Tdefine,
-                    // Tinclude,
-                    // Ttypedef,
-                    // Tenum,
-                    // Tstruct,
-                    // Tsizeof,
-                    // Telipsis,       /* ... */
-                    // Tswitch,
-                    // Tcase,
-                    // Tbreak,
-                    // Tdefault,
-                    _ => {}
+                //println!("{}",st);
+                match st.as_ref(){
+                    "return" => {result.push(TokenT::Treturn)}
+                    "if"     => {result.push(TokenT::Tif)}
+                    "else"   => {result.push(TokenT::Telse)}
+                    "while"  => {result.push(TokenT::Twhile)}
+                    "for"    => {result.push(TokenT::Tfor)}
+                    "do"     => {result.push(TokenT::Tdo)} 
+                    "define" => {result.push(TokenT::Tdefine)}
+                    "include"=> {result.push(TokenT::Tinclude)}
+                    "typedef"=> {result.push(TokenT::Ttypedef)}
+                    "enum"   => {result.push(TokenT::Tenum)}
+                    "struct" => {result.push(TokenT::Tstruct)}
+                    "sizeof" => {result.push(TokenT::Tsizeof)}
+                    "switch" => {result.push(TokenT::Tsizeof)}
+                    "case"   => {result.push(TokenT::Tcase)}
+                    "break"  => {result.push(TokenT::Tbreak)}
+                    "default"=> {result.push(TokenT::Tdefine)}
+                    _ => {return Err(format!("Undefined: {}",st));}
                 }
             }
-            // char ???
+            // char 
             '\'' => {
                 it.next();
-                let ch = c;
-                println!("{}",c);
+                let &ch = it.peek().unwrap();
+                println!("{},",it.peek().unwrap());
                 it.next();
-                println!("{}",c);
-                it.next();
-                println!("{}",c);
-                match c {
+                println!("{}",it.peek().unwrap());
+                match it.peek().unwrap() {
                     '\'' => {
                         result.push(TokenT::Tchar(ch));
                     }
-                    _ => {return Err(format!("Is not char"));}
+                    _ => {return Err(format!("Not a char type."));}
                 }
             }
             ',' => {
@@ -155,7 +153,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '|' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '|' => {
                         result.push(TokenT::TlogOr);
                         it.next();
@@ -169,7 +167,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '&' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '&' => {
                         result.push(TokenT::TlogAnd);
                         it.next();
@@ -185,7 +183,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '!' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '=' => {
                         result.push(TokenT::Tnoteq);
                         it.next();
@@ -195,7 +193,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '<' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '<' => {
                         result.push(TokenT::Tlshift);
                         it.next();
@@ -209,7 +207,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '>' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '>' => {
                         result.push(TokenT::Trshift);
                         it.next();
@@ -222,12 +220,24 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                 }
             }
             '.' => {
-                result.push(TokenT::Tdot);
                 it.next();
+                match it.peek().unwrap(){
+                    '.' => {
+                        it.next();
+                        match it.peek().unwrap(){
+                            '.' => {
+                                result.push(TokenT::Telipsis);
+                                it.next();
+                            }
+                            _ => {return Err(format!("unexpected character"));}
+                        }
+                    }
+                    _ => {result.push(TokenT::Tdot);}
+                }
             }
             '+' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '+' => {
                         result.push(TokenT::Tincrement);
                         it.next();
@@ -241,7 +251,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '-' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '-' => {
                         result.push(TokenT::Tdecrement);
                         it.next();
@@ -259,7 +269,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             }
             '=' => {
                 it.next();
-                match c{
+                match it.peek().unwrap(){
                     '=' => {
                         result.push(TokenT::Teq);
                         it.next();
@@ -275,7 +285,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                 result.push(TokenT::Tsemicolon); 
                 it.next();
             }
-            _ => {return Err(format!("unexpected character {}", c));}
+            _ => {return Err(format!("unexpected character: {}", c));}
         }
     }
     result.push(TokenT::Teof);
@@ -286,9 +296,9 @@ pub fn get_till_space<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>)
     let mut output: String = c.to_string();
     iter.next();
     loop {
-        match c {
+        match iter.peek().unwrap(){
             'A'..='Z' | 'a'..='z' | '0'..='9' => {
-                output.push(c);
+                output.push(*iter.peek().unwrap());
                 iter.next();
             }
             _ => {break;}
