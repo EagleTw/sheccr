@@ -12,7 +12,7 @@ use std::convert::TryInto;
 pub enum TokenT {
     Tstart, /* FIXME: it was intended to start the state machine. */
     Tnumeric(i64),                      /* Implimented */       /* Tested */ 
-    Tidentifier,                        
+    Tidentifier(String);                /* Implimented */       /* Tested */
     Tcomma,  /* , */                    /* Implimented */       /* Tested */
     Tstring(String), /* null-terminated string */
     Tchar(char),                        /* Implimented */       /* Tested */                               
@@ -134,7 +134,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                     "case"   => {result.push(TokenT::Tcase)}
                     "break"  => {result.push(TokenT::Tbreak)}
                     "default"=> {result.push(TokenT::Tdefine)}
-                    _ => {return Err(format!("Undefined: {}",st));}
+                    _ => {result.push(TokenT::Tidentifier(st));}
                 }
             }
             // char 
