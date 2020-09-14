@@ -44,7 +44,7 @@ pub enum TokenT {
     Tcolon,         /* : */             /* Implimented */
     Tsemicolon,     /* ; */             /* Implimented */
     Teof,           /* end-of-file (EOF) */
-    Tampersand,     /* & */             //
+    Tampersand,     /* & */             /* Implimented */
     Treturn,
     Tif,
     Telse,
