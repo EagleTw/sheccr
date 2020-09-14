@@ -4,5 +4,13 @@ a Self-Hosting and Educational C Compiler in Rust inspired by [shecc](https://gi
 
 Learning Rust technique from [rustcc](https://github.com/ClementTsang/rustcc/) 
 
-[x]Lexer 
-[ ]Parser  
+Dependencies
+------------
+Rust and Cargo installed
+
+
+Usage 
+-----
+```script
+$ cargo run file.c
+```
