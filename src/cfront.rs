@@ -12,7 +12,7 @@ use std::convert::TryInto;
 pub enum TokenT {
     Tstart, /* FIXME: it was intended to start the state machine. */
     Tnumeric(i64),                      /* Implimented */       /* Tested */ 
-    Tidentifier(String);                /* Implimented */       /* Tested */
+    Tidentifier(String),                /* Implimented */       /* Tested */
     Tcomma,  /* , */                    /* Implimented */       /* Tested */
     Tstring(String), /* null-terminated string */
     Tchar(char),                        /* Implimented */       /* Tested */                               
@@ -84,6 +84,17 @@ pub fn get_till_space<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>)
     output
 }
 
+pub fn get_hex_number <T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64{
+    let mut output: u64;
+    iter.next();
+    while let Some(&s) = iter.peek(){
+        match s {
+            '0' => {output = output*16 + 0;}
+        }
+    }
+    output
+}
+
 pub fn get_number<T: Iterator<Item = char>>(c: char, iter: &mut Peekable<T>) -> u64 {
     let mut number = c.to_string().parse::<u64>().expect("The caller should have passed a digit.");
     while let Some(Ok(digit)) = iter.peek().map(|c| c.to_string().parse::<u64>()) {
@@ -111,6 +122,9 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             ' '|'\r'|'\n'|'n' => {it.next();}
             '0'..='9' => {
                 it.next();
+                if (it.peek().unwrap() == &'x'){
+                    get_hex_number(c, &mut it);
+                }
                 let n = get_number(c,&mut it);
                 result.push(TokenT::Tnumeric(n.try_into().unwrap()));
             }
@@ -324,3 +338,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
     result.push(TokenT::Teof);
     Ok(result)
 }
+
+// pub fn lex_accept()<T: Iterator<Item = TokenT>>(c: char, iter: &mut Peekable<T>, token: TokenT) -> bool {
+
+// }
