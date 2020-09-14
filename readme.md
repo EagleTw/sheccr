@@ -6,9 +6,9 @@ Learning Rust technique from [rustcc](https://github.com/ClementTsang/rustcc/)
 
 On Going 
 --------
-[x] Lexer
-[] Parser
-[] llvm IR 
+[x] Lexer  
+[] Parser  
+[] llvm IR   
 
 Dependencies
 ------------
