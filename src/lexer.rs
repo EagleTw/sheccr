@@ -141,9 +141,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
             '\'' => {
                 it.next();
                 let &ch = it.peek().unwrap();
-                println!("{},",it.peek().unwrap());
                 it.next();
-                println!("{}",it.peek().unwrap());
                 match it.peek().unwrap() {
                     '\'' => {
                         result.push(TokenT::Tchar(ch));
