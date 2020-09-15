@@ -1,5 +1,5 @@
 
-mod cfront;
+mod lexer;
 //mod defs;
 
 use std::env;
@@ -16,6 +16,6 @@ fn main() {
     println!();
 
     // Convert to tokens
-    let token_vec = cfront::lexer(&file_contents).unwrap();
-    cfront::print_tokens(&token_vec);
+    let token_vec = lexer::lexer(&file_contents).unwrap();
+    lexer::print_tokens(&token_vec);
 }

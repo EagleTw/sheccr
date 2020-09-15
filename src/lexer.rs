@@ -147,6 +147,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                 match it.peek().unwrap() {
                     '\'' => {
                         result.push(TokenT::Tchar(ch));
+                        it.next();
                     }
                     _ => {return Err(format!("Not a char type."));}
                 }

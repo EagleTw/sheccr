@@ -159,7 +159,3 @@ pub struct ConstantT {
     alias: String<>,
     value: usize,
 }
-
-fn main(){
-
-}
