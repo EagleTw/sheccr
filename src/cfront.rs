@@ -12,7 +12,7 @@ use std::convert::TryInto;
 pub enum TokenT {
     Tstart, /* FIXME: it was intended to start the state machine. */
     Tnumeric(i64),                      /* Implimented */       /* Tested */ 
-    Tidentifier(String);                /* Implimented */       /* Tested */
+    Tidentifier(String),                /* Implimented */       /* Tested */
     Tcomma,  /* , */                    /* Implimented */       /* Tested */
     Tstring(String), /* null-terminated string */
     Tchar(char),                        /* Implimented */       /* Tested */                               
@@ -133,7 +133,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                     "switch" => {result.push(TokenT::Tsizeof)}
                     "case"   => {result.push(TokenT::Tcase)}
                     "break"  => {result.push(TokenT::Tbreak)}
-                    "default"=> {result.push(TokenT::Tdefine)}
+                    "default"=> {result.push(TokenT::Tdefault)}
                     _ => {result.push(TokenT::Tidentifier(st));}
                 }
             }
@@ -150,6 +150,22 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                     }
                     _ => {return Err(format!("Not a char type."));}
                 }
+            }
+            // string
+            '"' => {
+                let mut output: String = c.to_string();
+                it.next();
+                while let Some(&st)= it.peek(){
+                    match st{
+                        '"' => {break;}
+                        _ => {
+                            output.push(st);
+                            it.next();
+                        }
+                    }
+                }
+                it.next();
+                result.push(TokenT::Tstring(output));
             }
             ',' => {
                 result.push(TokenT::Tcomma);
