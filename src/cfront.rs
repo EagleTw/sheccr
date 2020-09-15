@@ -114,7 +114,7 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                 let n = get_number(c,&mut it);
                 result.push(TokenT::Tnumeric(n.try_into().unwrap()));
             }
-            'A'..='Z' | 'a'..='z'=> {
+            'A'..='Z' | 'a'..='z' | '#'=> {
                 let st:String = get_till_space(c, &mut it);
                 //println!("{}",st);
                 match st.as_ref(){
@@ -124,9 +124,9 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
                     "while"  => {result.push(TokenT::Twhile)}
                     "for"    => {result.push(TokenT::Tfor)}
                     "do"     => {result.push(TokenT::Tdo)} 
-                    "define" => {result.push(TokenT::Tdefine)}
-                    "include"=> {result.push(TokenT::Tinclude)}
-                    "typedef"=> {result.push(TokenT::Ttypedef)}
+                    "#define" => {result.push(TokenT::Tdefine)}
+                    "#include"=> {result.push(TokenT::Tinclude)}
+                    "#typedef"=> {result.push(TokenT::Ttypedef)}
                     "enum"   => {result.push(TokenT::Tenum)}
                     "struct" => {result.push(TokenT::Tstruct)}
                     "sizeof" => {result.push(TokenT::Tsizeof)}
@@ -340,3 +340,4 @@ pub fn lexer(input: &String) -> Result<Vec<TokenT>, String>{
     result.push(TokenT::Teof);
     Ok(result)
 }
+
