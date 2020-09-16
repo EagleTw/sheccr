@@ -1072,7 +1072,7 @@ pub fn print_ast (input_prog : &Program) {
     println!("=====AST PRINT=====");
 
     for fnc in &input_prog.list_of_fnc {
-        println!("FUN {} {}:", fnc.return_type, fnc.name);
+        println!("FUNC {} {}:", fnc.return_type, fnc.name);
         print!("     params: ( ");
         for p in &fnc.params {
             print!("{} {} ", p.param_type.clone(), p.name.clone());
@@ -2038,7 +2038,8 @@ pub fn parse_statement(token_vec : &mut Vec<lexer::Token>) -> Statement {
         else if (tok.value == "return") {
             result.name = String::from("return");
             token_vec.remove(0);
-            result.exp = Some(parse_assign(token_vec));
+            result.exp = Some(
+                (token_vec));
 
             tok = get_next_token(token_vec);
             assert!(tok.value == ";", "Missing semicolon, saw {}", tok.value);
@@ -2697,7 +2698,6 @@ pub fn parse_to_ast(filename : &String) -> Program {
     // Parse tokens into AST
     let result_ast : Program = parse_program(&mut token_vec); 
     print_ast(&result_ast);
-
     result_ast
 }
 
