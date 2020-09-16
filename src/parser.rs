@@ -2038,8 +2038,7 @@ pub fn parse_statement(token_vec : &mut Vec<lexer::Token>) -> Statement {
         else if (tok.value == "return") {
             result.name = String::from("return");
             token_vec.remove(0);
-            result.exp = Some(
-                (token_vec));
+            result.exp = Some(parse_assign(token_vec));
 
             tok = get_next_token(token_vec);
             assert!(tok.value == ";", "Missing semicolon, saw {}", tok.value);
