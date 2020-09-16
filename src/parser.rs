@@ -770,6 +770,14 @@ impl PostFixUnary {
     }
 }
 
+impl Clone for Compound {
+    fn clone(&self) -> Self {
+        Compound {
+            list_of_blk : self.list_of_blk.clone(),
+        }
+    }
+}
+
 impl Clone for For {
     fn clone(&self) -> Self {
         For {
